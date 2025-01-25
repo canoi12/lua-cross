@@ -4,6 +4,18 @@ rm -rf build/
 
 ARCH=$2
 
+i686_linux() {
+    cmake -B build -DCMAKE_TOOLCHAIN_FILE=../toolchains/i686.cmake
+    cmake --build build
+    mkdir -p dist/i686-linux-gnu/bin
+    mkdir -p dist/i686-linux-gnu/lib
+    cp build/liblua5.* dist/i686-linux-gnu/lib/
+    cp build/lua dist/i686-linux-gnu/bin
+    cp build/luac dist/i686-linux-gnu/bin
+
+    rm -rf build/
+}
+
 x86_64_linux() {
     cmake -B build
     cmake --build build
@@ -28,7 +40,20 @@ aarch64_linux() {
     rm -rf build/
 }
 
-w64_mingw() {
+i686_mingw() {
+    cmake -B build -DCMAKE_TOOLCHAIN_FILE=../toolchains/MinGW-i686.cmake
+    cmake --build build
+    mkdir -p dist/i686-w64-mingw32/bin
+    mkdir -p dist/i686-w64-mingw32/lib
+    cp build/liblua5* dist/i686-w64-mingw32/lib/
+    cp build/*.dll dist/i686-w64-mingw32/lib/
+    cp build/lua.exe dist/i686-w64-mingw32/bin
+    cp build/luac.exe dist/i686-w64-mingw32/bin
+
+    rm -rf build/
+}
+
+x86_64_mingw() {
     cmake -B build -DCMAKE_TOOLCHAIN_FILE=../toolchains/MinGW.cmake
     cmake --build build
     mkdir -p dist/x86_64-w64-mingw32/bin
@@ -123,6 +148,7 @@ x86_64_android() {
 
 build_lua() {
     case $1 in
+    'i686_linux' ) i686_linux ;;
     'x86_64_linux' ) x86_64_linux ;;
     'aarch64_linux' ) aarch64_linux ;;
     'i386_android' ) i386_android ;;
@@ -130,8 +156,10 @@ build_lua() {
     'armv7_android' ) armv7_android ;;
     'aarch64_android' ) aarch64_android ;;
     'wasm32_emscripten' ) wasm32_emscripten ;;
-    'w64_mingw' ) w64_mingw ;;
+    'i686_mingw' ) i686_mingw ;;
+    'x86_64_mingw' ) x86_64_mingw ;;
     'all' )
+        i686_linux
         x86_64_linux
         aarch64_linux
         i386_android
@@ -139,7 +167,8 @@ build_lua() {
         armv7_android
         aarch64_android
         wasm32_emscripten
-        w64_mingw
+        i686_mingw
+        x86_64_mingw
         break;;
     esac
 }
