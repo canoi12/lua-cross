@@ -124,17 +124,19 @@ x86_64_android() {
 build_lua() {
     case $1 in
     'x86_64_linux' ) x86_64_linux ;;
-    'aarch64_linux' ) x86_64_linux ;;
+    'aarch64_linux' ) aarch64_linux ;;
     'i386_android' ) i386_android ;;
     'x86_64_android' ) x86_64_android ;;
-    'aarch64_android' ) aarch64_android ;;
     'armv7_android' ) armv7_android ;;
-    'aarch64_linux' ) aarch64_linux ;;
+    'aarch64_android' ) aarch64_android ;;
     'wasm32_emscripten' ) wasm32_emscripten ;;
     'w64_mingw' ) w64_mingw ;;
     'all' )
         x86_64_linux
         aarch64_linux
+        i386_android
+        x86_64_android
+        armv7_android
         aarch64_android
         wasm32_emscripten
         w64_mingw
