@@ -23,8 +23,10 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 endif ()
 
 add_library(${PROJECT_NAME} STATIC ${LUA_SOURCES})
+target_link_libraries(${PROJECT_NAME} m)
 
 add_library(${PROJECT_NAME}Shared SHARED ${LUA_SOURCES})
+target_link_libraries(${PROJECT_NAME}Shared m)
 set_target_properties(${PROJECT_NAME}Shared PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
     set_target_properties(${PROJECT_NAME}Shared PROPERTIES PREFIX "")
