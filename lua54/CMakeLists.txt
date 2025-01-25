@@ -13,7 +13,7 @@ list(REMOVE_ITEM LUA_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/src/lua.c)
 list(REMOVE_ITEM LUA_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/src/luac.c)
 
 
-if (NOT ${MSVC})
+if (NOT DEFINED MSVC)
 set(CMAKE_C_FLAGS "-O2 -Wall -Wextra")
 set(CMAKE_EXE_LINKER_FLAGS "-lm")
 endif ()
@@ -28,12 +28,12 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 endif ()
 
 add_library(${PROJECT_NAME} STATIC ${LUA_SOURCES})
-if (NOT ${MSVC})
+if (NOT DEFINED MSVC)
 target_link_libraries(${PROJECT_NAME} m)
 endif ()
 
 add_library(${PROJECT_NAME}Shared SHARED ${LUA_SOURCES})
-if (NOT ${MSVC})
+if (NOT DEFINED MSVC)
 target_link_libraries(${PROJECT_NAME}Shared m)
 endif ()
 
