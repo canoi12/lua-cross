@@ -1,2 +1,2 @@
 # lua-cross
-cross compilation builds for Lua
+pre compiled cross platform Lua builds
