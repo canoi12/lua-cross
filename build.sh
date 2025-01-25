@@ -87,9 +87,46 @@ aarch64_android() {
     rm -rf build/
 }
 
+i386_android() {
+    cmake -B build \
+    -DCMAKE_TOOLCHAIN_FILE=$HOME/android/sdk/ndk/25.1.8937393/build/cmake/android.toolchain.cmake \
+    -DANDROID_ABI=x86 \
+    -DANDROID_PLATFORM=android-21
+
+    cmake --build build
+
+    mkdir -p dist/i386-linux-android/android-21/bin
+    mkdir -p dist/i386-linux-android/android-21/lib
+    cp build/liblua5* dist/i386-linux-android/android-21/lib/
+    cp build/lua dist/i386-linux-android/android-21/bin
+    cp build/luac dist/i386-linux-android/android-21/bin
+
+    rm -rf build/
+}
+
+x86_64_android() {
+    cmake -B build \
+    -DCMAKE_TOOLCHAIN_FILE=$HOME/android/sdk/ndk/25.1.8937393/build/cmake/android.toolchain.cmake \
+    -DANDROID_ABI=x86_64 \
+    -DANDROID_PLATFORM=android-21
+
+    cmake --build build
+
+    mkdir -p dist/x86_64-linux-android/android-21/bin
+    mkdir -p dist/x86_64-linux-android/android-21/lib
+    cp build/liblua5* dist/x86_64-linux-android/android-21/lib/
+    cp build/lua dist/x86_64-linux-android/android-21/bin
+    cp build/luac dist/x86_64-linux-android/android-21/bin
+
+    rm -rf build/
+}
+
 build_lua() {
     case $1 in
+    'x86_64_linux' ) x86_64_linux ;;
     'aarch64_linux' ) x86_64_linux ;;
+    'i386_android' ) i386_android ;;
+    'x86_64_android' ) x86_64_android ;;
     'aarch64_android' ) aarch64_android ;;
     'armv7_android' ) armv7_android ;;
     'aarch64_linux' ) aarch64_linux ;;
