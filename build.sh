@@ -12,6 +12,16 @@ cp build/luac dist/x86_64-linux-gnu/bin
 
 rm -rf build/
 
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=../toolchains/Aarch64.cmake
+cmake --build build
+mkdir -p dist/aarch64-linux-gnu/bin
+mkdir -p dist/aarch64-linux-gnu/lib
+cp build/liblua5.* dist/aarch64-linux-gnu/lib/
+cp build/lua dist/aarch64-linux-gnu/bin
+cp build/luac dist/aarch64-linux-gnu/bin
+
+rm -rf build/
+
 cmake -B build -DCMAKE_TOOLCHAIN_FILE=../toolchains/MinGW.cmake
 cmake --build build
 mkdir -p dist/x86_64-w64-mingw32/bin
